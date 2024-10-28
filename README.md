@@ -1,0 +1,1 @@
+MovieApp is a web application built with ASP.NET Core MVC that allows users to explore movies, view details, watch trailers, purchase movies, and leave reviews. Administrators can manage movie listings, genres, and cast information.
