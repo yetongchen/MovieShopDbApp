@@ -1,0 +1,24 @@
+﻿@model ApplicationCore.Models.CastDetailModel
+@{
+    ViewData["Title"] = "Cast Details";
+}
+<h1>@Model.Name</h1>
+<img src="@Model.ProfilePath" alt="@Model.Name" style="width: 150px; height: auto;">
+@if (@Model.Gender == "2")
+{
+    <p>Gender: Male</p>
+}
+else
+{
+    <p>Gender: Female</p>
+}
+
+<p><a href="@Model.TmdbUrl" target="_blank">TMDB Profile</a></p>
+
+<h2>Movies Featuring @Model.Name</h2>
+<div class="movie-grid">
+    @foreach (var movie in Model.Movies)
+    {
+        @await Html.PartialAsync("MovieCard", movie)
+    }
+</div>

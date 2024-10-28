@@ -1,0 +1,15 @@
+﻿@model Genre;
+
+@{
+    ViewData["Title"] = "Edit Genre";
+}
+<h1>@ViewData["Title"]</h1>
+<form asp-action="Delete" method="post" asp-controller="Genre">
+    <div class="container">
+        <div class="my-3">
+            <label for="Name">Name</label>
+            <span>@Model.Name</span>
+        </div>
+        <button class="btn btn-submit">Delete</button>
+    </div>
+</form>

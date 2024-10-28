@@ -1,0 +1,31 @@
+﻿@model ApplicationCore.Models.MovieCreateModel
+@{
+    ViewData["Title"] = "Add New Movie";
+}
+<h2>Add New Movie</h2>
+
+<form asp-action="AddMovie" method="post">
+    <div class="form-group">
+        <label>Title</label>
+        <input asp-for="Title" class="form-control" />
+        <span asp-validation-for="Title" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label>Overview</label>
+        <textarea asp-for="Overview" class="form-control"></textarea>
+    </div>
+    <div class="form-group">
+        <label>Runtime</label>
+        <input asp-for="Runtime" type="number" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label>Budget</label>
+        <input asp-for="Budget" type="number" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label>Poster URL</label>
+        <input asp-for="PosterUrl" class="form-control" />
+    </div>
+    <!-- 继续添加其他字段 -->
+    <button type="submit" class="btn btn-primary">Add Movie</button>
+</form>

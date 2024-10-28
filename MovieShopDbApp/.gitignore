@@ -1,0 +1,70 @@
+# Ignore build output directories
+bin/
+obj/
+
+# Ignore user-specific files
+*.rsuser
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+
+# Ignore Visual Studio working directory
+.vs/
+
+# Ignore Rider/IDEA project files
+.idea/
+
+# Ignore Visual Studio Code workspace settings
+.vscode/
+
+# Ignore Auto-generated files (backup, temporary files)
+*.log
+*.vspscc
+*.vssscc
+*.pdb
+*.cache
+*.msp
+*.mdf
+*.ldf
+*.sql
+*.sqlite
+*.bak
+*.swp
+
+# Ignore project-specific files
+project.lock.json
+project.fragment.lock.json
+*.nupkg
+
+# Ignore dependency directories
+packages/
+node_modules/
+
+# Ignore NuGet Packages
+*.nupkg
+project.lock.json
+project.fragment.lock.json
+
+# Ignore Windows and macOS generated files
+Thumbs.db
+ehthumbs.db
+.DS_Store
+
+# Ignore Publish/Web output folders
+**/wwwroot/
+**/publish/
+**/dist/
+
+# Ignore ApplicationCore specific settings
+/ApplicationCore/bin/
+/ApplicationCore/obj/
+
+# Ignore Infrastructure specific settings
+/Infrastructure/bin/
+/Infrastructure/obj/
+
+# Ignore MovieApp.WebMVC specific settings
+/MovieApp.WebMVC/bin/
+/MovieApp.WebMVC/obj/
+/MovieApp.WebMVC/wwwroot/

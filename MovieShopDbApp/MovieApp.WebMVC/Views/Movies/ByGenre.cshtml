@@ -1,0 +1,58 @@
+﻿@model ApplicationCore.Models.PaginatedList<ApplicationCore.Models.MovieCardModel>
+
+<h2>Movies in @ViewBag.GenreName</h2>
+
+<div class="movie-grid">
+    @foreach (var movie in Model)
+    {
+        <div class="movie-card">
+            <a href="@Url.Action("Details", "Movies", new { id = movie.Id })">
+                <img src="@movie.PosterUrl" alt="@movie.Title" />
+            </a>
+            <h3>@movie.Title</h3>
+        </div>
+    }
+</div>
+
+<nav aria-label="Page navigation">
+    <ul class="pagination justify-content-center">
+        <li class="page-item">
+            <a class="page-link" href="?genreId=@ViewBag.GenreId&page=1&pageSize=20">««</a>
+        </li>
+        <li class="page-item">
+            <a class="page-link" href="?genreId=@ViewBag.GenreId&page=@(Model.PageIndex - 1)&pageSize=20">«</a>
+        </li>
+        @for (int i = 1; i <= Model.TotalPages; i++)
+        {
+            if (i == Model.PageIndex)
+            {
+                <li class="page-item active">
+                    <span class="page-link">@i</span>
+                </li>
+            }
+            else
+            {
+                <li class="page-item">
+                    <a class="page-link" href="?genreId=@ViewBag.GenreId&page=@i&pageSize=20">@i</a>
+                </li>
+            }
+
+            if (i >= 5 && i < Model.TotalPages - 1)
+            {
+                <li class="page-item disabled">
+                    <span class="page-link">...</span>
+                </li>
+                <li class="page-item">
+                    <a class="page-link" href="?genreId=@ViewBag.GenreId&page=@Model.TotalPages&pageSize=20">@Model.TotalPages</a>
+                </li>
+                break;
+            }
+        }
+        <li class="page-item">
+            <a class="page-link" href="?genreId=@ViewBag.GenreId&page=@(Model.PageIndex + 1)&pageSize=20">»</a>
+        </li>
+        <li class="page-item">
+            <a class="page-link" href="?genreId=@ViewBag.GenreId&page=@Model.TotalPages&pageSize=20">»»</a>
+        </li>
+    </ul>
+</nav>
