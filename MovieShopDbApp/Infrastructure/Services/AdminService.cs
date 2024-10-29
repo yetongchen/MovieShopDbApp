@@ -13,10 +13,10 @@ namespace Infrastructure.Services
 {
     public class AdminService : IAdminService
     {
-        private readonly IPurchaseRepository _purchaseRepository;
-        private readonly IMovieRepository _movieRepository;
+        private readonly IPurchaseRepositoryAsync _purchaseRepository;
+        private readonly IMovieRepositoryAsync _movieRepository;
 
-        public AdminService(IPurchaseRepository purchaseRepository, IMovieRepository movieRepository)
+        public AdminService(IPurchaseRepositoryAsync purchaseRepository, IMovieRepositoryAsync movieRepository)
         {
             _purchaseRepository = purchaseRepository;
             _movieRepository = movieRepository;
@@ -40,7 +40,7 @@ namespace Infrastructure.Services
                 OriginalLanguage = model.OriginalLanguage
             };
 
-            int newMovieId = await _movieRepository.AddMovieAsync(movie);
+            int newMovieId = await _movieRepository.InsertAsync(movie);
             return newMovieId;
         }
 

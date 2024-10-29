@@ -13,16 +13,16 @@ namespace Infrastructure.Services
 {
     public class GenreService : IGenreService
     {
-        private readonly IGenreRepository _genreRepository;
+        private readonly IGenreRepositoryAsync _genreRepository;
 
-        public GenreService(IGenreRepository genreRepository)
+        public GenreService(IGenreRepositoryAsync genreRepository)
         {
             _genreRepository = genreRepository;
         }
 
-        public GenreModel GetGenreByIdAsync(int genreId)
+        public async Task<GenreModel> GetGenreByIdAsync(int genreId)
         {
-            var genre =_genreRepository.GetById(genreId);
+            var genre = await _genreRepository.GetByIdAsync(genreId);
             if (genre == null)
             {
                 return null;
@@ -30,9 +30,9 @@ namespace Infrastructure.Services
             return new GenreModel { Id = genre.Id, Name = genre.Name };
         }
 
-        public IEnumerable<GenreModel> GetAllGenresAsync()
+        public async Task<IEnumerable<GenreModel>> GetAllGenresAsync()
         {
-            var genres = _genreRepository.GetAll();
+            var genres = await _genreRepository.GetAllAsync();
             if (!genres.Any())
             {
                 Console.WriteLine("No genres found in the database.");

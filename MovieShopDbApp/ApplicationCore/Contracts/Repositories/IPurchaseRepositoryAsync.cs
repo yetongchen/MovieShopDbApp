@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace ApplicationCore.Contracts.Repositories
 {
-    public interface IPurchaseRepository
+    public interface IPurchaseRepositoryAsync : IRepositoryAsync<Purchase>
     {
         Task<bool> IsMoviePurchasedByUserAsync(int movieId, int userId);
         Task<IEnumerable<Movie>> GetMoviesPurchasedByUserIdAsync(int userId);

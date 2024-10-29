@@ -25,8 +25,8 @@ builder.Services.AddAuthentication(options =>
 })
 .AddCookie(options =>
 {
-    options.LoginPath = "/Account/Login"; // 登录路径
-    options.LogoutPath = "/Account/Logout"; // 登出路径
+    options.LoginPath = "/Account/Login";
+    options.LogoutPath = "/Account/Logout";
 })
 .AddJwtBearer(options =>
 {
@@ -44,11 +44,11 @@ builder.Services.AddAuthorization(options =>
 });
 builder.Services.AddControllersWithViews(); //var key = Encoding.ASCII.GetBytes("YourSecretKeyHere"); // 使用强密码作为密钥
 
-builder.Services.AddScoped<IMovieRepository, MovieRepository>();
-builder.Services.AddScoped<IUserRepository, UserRepository>();
-builder.Services.AddScoped<IGenreRepository, GenreRepository>();
-builder.Services.AddScoped<ICastRepository, CastRepository>();
-builder.Services.AddScoped<IPurchaseRepository, PurchaseRepository>();
+builder.Services.AddScoped<IMovieRepositoryAsync, MovieRepositoryAsync>();
+builder.Services.AddScoped<IUserRepositoryAsync, UserRepositoryAsync>();
+builder.Services.AddScoped<IGenreRepositoryAsync, GenreRepositoryAsync>();
+builder.Services.AddScoped<ICastRepositoryAsync, CastRepositoryAsync>();
+builder.Services.AddScoped<IPurchaseRepositoryAsync, PurchaseRepositoryAsync>();
 
 builder.Services.AddScoped<IMovieService, MovieService>();
 builder.Services.AddScoped<IUserService, UserService>();

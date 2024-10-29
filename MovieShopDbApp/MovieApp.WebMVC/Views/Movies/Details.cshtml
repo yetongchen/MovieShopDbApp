@@ -3,21 +3,18 @@
     ViewData["Title"] = "Movie Details";
 }
 <div class="container mt-0 px-0">
-    <!-- 第一行：电影详情 -->
-    <div class="row" style="height: 300px; background-image: url('@Model.BackdropUrl'); background-size: cover; background-position: center; color: white; position: relative;">
-        <!-- 深色遮罩 -->
-        <div class="overlay"
-             style="position: absolute; top: 0; left: 0; right: 0; bottom: 0; background-color: rgba(0, 0, 0, 0.75);">
-        </div>
-        <div class="content d-flex"
-             style="position: relative; color: white; width: 100%;">
-            <!-- 第一列：电影海报 -->
-            <div class="col-md-4 text-end" style="flex: 1;">
+    <!-- 1st row -->
+    <div class="row position-relative text-white" style="height: 300px; background-image: url('@Model.BackdropUrl'); background-size: cover; background-position: center;">
+        <!-- Dark Overlay -->
+        <div class="position-absolute top-0 start-0 end-0 bottom-0 bg-dark opacity-75"></div>
+        <div class="content d-flex position-relative w-100">
+            <!-- 1st column: Movie Poster -->
+            <div class="col-md-4 text-end d-flex align-items-center">
                 <img src="@Model.PosterUrl" alt="@Model.Title" style="height: 300px;" />
             </div>
 
-            <!-- 第二列：电影信息 -->
-            <div class="col-md-4" style="flex: 2; display: flex; flex-direction: column; justify-content: center; padding-left: 30px;">
+            <!-- 2nd cokumn: Movie Details -->
+            <div class="col-md-6 d-flex flex-column justify-content-center ps-4">
                 <h2>@Model.Title</h2>
                 <h5 class="text-muted" style="font-size: 12px;">@Model.Tagline</h5>
                 <div class="text-muted" style="font-size: 14px;">@Model.Runtime m</div>
@@ -30,8 +27,8 @@
                 <p class="mt-3" style="font-size: 12px;">@Model.Overview</p>
             </div>
         
-            <!-- 第三列：操作按钮 -->
-            <div class="col-md-2 d-flex flex-column" style="z-index: 1; padding-top: 20px; padding-right: 15px;">
+            <!-- 3rd column: Buy & Review Buttons -->
+            <div class="col-md-2 d-flex flex-column justify-content-start align-items-end pt-3 pe-3">
                 @if (Model.IsPurchased)
                 {
                     <button type="button" class="btn btn-primary mb-3" data-bs-toggle="modal" data-bs-target="#watchMovieModal">Watch Movie</button>
@@ -45,23 +42,23 @@
         </div>
     </div>
 
-    <!-- 第二行：电影的详细信息 -->
-    <div class="row" style="padding-top:20px;">
-        <!-- 第一列：电影 Facts 和预告片 -->
-        <div class="col-md-4">
-            <!-- 电影 Facts -->
+    <!-- 2nd row -->
+    <div class="row">
+        <!-- 1st column: Movie Facts and Trailers -->
+        <div class="col-md-4 pt-3 bg-light">
+            <!-- Movie Facts -->
             <h4>Movie Facts</h4>
             <ul class="list-group mb-3">
-                <li class="list-group-item"><strong>Release Date:</strong> @Model.ReleaseDate.ToString("MMM, dd, yyyy")</li>
-                <li class="list-group-item"><strong>Runtime:</strong> @Model.Runtime m</li>
-                <li class="list-group-item"><strong>Box Office:</strong> $@Model.Revenue.ToString("F2")</li>
-                <li class="list-group-item"><strong>Budget:</strong> $@Model.Budget.ToString("F2")</li>
-                <li class="list-group-item">
+                <li class="list-group-item bg-transparent">Release Date: <span class="badge rounded-pill bg-dark">@Model.ReleaseDate.ToString("MMM, dd, yyyy")</span></li>
+                <li class="list-group-item bg-transparent">Runtime: <span class="badge rounded-pill bg-dark">@Model.Runtime m</span></li>
+                <li class="list-group-item bg-transparent">Box Office: <span class="badge rounded-pill bg-dark">$@Model.Revenue.ToString("F2")</span></li>
+                <li class="list-group-item bg-transparent">Budget: <span class="badge rounded-pill bg-dark">$@Model.Budget.ToString("F2")</span></li>
+                <li class="list-group-item bg-transparent">
                     <a href="@Model.ImdbUrl" target="_blank">IMDB</a>
                 </li>
             </ul>
 
-            <!-- 预告片列表 -->
+            <!-- Trailers -->
             <h4>Trailers</h4>
             <ul class="list-group mb-3">
                 @foreach (var trailer in Model.Trailers)
@@ -73,8 +70,8 @@
             </ul>
         </div>
 
-        <!-- 第二列：演员列表 -->
-        <div class="col-md-8">
+        <!-- 2nd column: casts -->
+        <div class="col-md-8 pt-3">
             <h4>Casts</h4>
             <ul class="list-group">
                 @foreach (var cast in Model.Casts)
@@ -85,7 +82,7 @@
                             <a href="@Url.Action("Details", "Cast", new {id = cast.Id })">
                                 <strong>@cast.Name</strong>
                             </a>
-                            <div class="text-muted" style="text-align: left; padding-left: 20px;">
+                            <div class="text-muted ms-3">
                                 @cast.Character
                             </div>
                         </div>
@@ -96,7 +93,7 @@
     </div>
 </div>
 
-<!-- 模态框：Buy Movie -->
+<!-- Modal：Buy Movie -->
 <div class="modal fade" id="buyMovieModal" tabindex="-1" aria-labelledby="buyMovieModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -115,7 +112,7 @@
     </div>
 </div>
 
-<!-- 模态框：Review Movie -->
+<!-- Modal：Review Movie -->
 <div class="modal fade" id="reviewMovieModal" tabindex="-1" aria-labelledby="reviewMovieModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">

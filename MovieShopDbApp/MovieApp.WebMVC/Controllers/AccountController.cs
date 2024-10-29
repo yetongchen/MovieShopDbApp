@@ -57,7 +57,7 @@ namespace MovieApp.WebMVC.Controllers
                         new Claim(ClaimTypes.Name, response.FirstName + " " + response.LastName),
                         new Claim(ClaimTypes.Email, response.Email),
                         new Claim(ClaimTypes.NameIdentifier, response.Id.ToString()),
-                        new Claim("Token", response.Token), // 存储 JWT 令牌
+                        new Claim("Token", response.Token),
                         new Claim(ClaimTypes.Role, response.Role)
                     };
                     var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);

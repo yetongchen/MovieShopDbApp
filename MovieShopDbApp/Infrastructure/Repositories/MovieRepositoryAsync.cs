@@ -10,11 +10,11 @@ using System.Threading.Tasks;
 
 namespace Infrastructure.Repositories
 {
-    public class MovieRepository : BaseRepository<Movie>, IMovieRepository
+    public class MovieRepositoryAsync : BaseRepositoryAsync<Movie>, IMovieRepositoryAsync
     {
         private readonly MovieShopDbContext _dbContext;
 
-        public MovieRepository(MovieShopDbContext dbContext) : base(dbContext)
+        public MovieRepositoryAsync(MovieShopDbContext dbContext) : base(dbContext)
         {
             _dbContext = dbContext;
         }
@@ -25,11 +25,6 @@ namespace Infrastructure.Repositories
                 .Include(m => m.MovieCasts).ThenInclude(mc => mc.Cast)
                 .Include(m => m.Trailers)
                 .FirstOrDefaultAsync(m => m.Id == movieId);
-        }
-
-        public async Task<IEnumerable<Movie>> GetAllMoviesAsync()
-        {
-            return await _dbContext.Movies.ToListAsync();
         }
 
         public async Task<IEnumerable<Movie>> GetMoviesByGenreAsync(int genreId)
@@ -52,11 +47,21 @@ namespace Infrastructure.Repositories
                 .ToListAsync();
         }
 
-        public async Task<int> AddMovieAsync(Movie movie)
+        public async Task<IEnumerable<Movie>> GetHighestGrossingMovies(int count)
         {
-            await _dbContext.Movies.AddAsync(movie);
-            await _dbContext.SaveChangesAsync();
-            return movie.Id;
+            if (count > 0)
+            {
+                return await _dbContext.Movies
+                    .OrderByDescending(m => m.Revenue)
+                    .Take(count)
+                    .ToListAsync();
+            }
+            else
+            {
+                return await _dbContext.Movies
+                    .OrderByDescending(m => m.Revenue)
+                    .ToListAsync();
+            }
         }
 
         /*public IEnumerable<Movie> GetMoviesWithGenre()

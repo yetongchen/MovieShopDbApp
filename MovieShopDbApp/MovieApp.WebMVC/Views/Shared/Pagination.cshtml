@@ -1,0 +1,72 @@
+﻿@model ApplicationCore.Models.PaginationModel<ApplicationCore.Models.MovieCardModel>
+
+<nav aria-label="Page navigation">
+    <ul class="pagination justify-content-center">
+        <!-- First and Previous Page Links -->
+        <li class="page-item @(Model.PageIndex == 1 ? "disabled" : "")">
+            <a class="page-link" href="@Url.Action((string)ViewBag.Action, (string)ViewBag.Controller, new { genreId = ViewBag.GenreId, page = 1, pageSize = 20 })">««</a>
+        </li>
+        <li class="page-item @(Model.PageIndex == 1 ? "disabled" : "")">
+            <a class="page-link" href="@Url.Action((string)ViewBag.Action, (string)ViewBag.Controller, new { genreId = ViewBag.GenreId, page = Model.PageIndex - 1, pageSize = 20 })">«</a>
+        </li>
+
+        <!-- Dynamic Page Number Links -->
+        @{
+            int totalPages = Model.TotalPages;
+            int currentPage = Model.PageIndex;
+            int pageWindow = 5; // Number of pages to display in the window
+
+            int startPage = Math.Max(1, currentPage - pageWindow / 2);
+            int endPage = Math.Min(totalPages, startPage + pageWindow - 1);
+
+            if (endPage - startPage < pageWindow - 1)
+            {
+                startPage = Math.Max(1, endPage - pageWindow + 1);
+            }
+        }
+
+        @if (startPage > 1)
+        {
+            <li class="page-item">
+                <a class="page-link" href="@Url.Action((string)ViewBag.Action, (string)ViewBag.Controller, new { genreId = ViewBag.GenreId, page = 1, pageSize = 20 })">1</a>
+            </li>
+            <li class="page-item disabled">
+                <span class="page-link">...</span>
+            </li>
+        }
+
+        @for (int i = startPage; i <= endPage; i++)
+        {
+            if (i == Model.PageIndex)
+            {
+                <li class="page-item active">
+                    <span class="page-link">@i</span>
+                </li>
+            }
+            else
+            {
+                <li class="page-item">
+                    <a class="page-link" href="@Url.Action((string)ViewBag.Action, (string)ViewBag.Controller, new { genreId = ViewBag.GenreId, page = i, pageSize = 20 })">@i</a>
+                </li>
+            }
+        }
+
+        @if (endPage < totalPages)
+        {
+            <li class="page-item disabled">
+                <span class="page-link">...</span>
+            </li>
+            <li class="page-item">
+                <a class="page-link" href="@Url.Action((string)ViewBag.Action, (string)ViewBag.Controller, new { genreId = ViewBag.GenreId, page = totalPages, pageSize = 20 })">@totalPages</a>
+            </li>
+        }
+
+        <!-- Next and Last Page Links -->
+        <li class="page-item @(Model.PageIndex == Model.TotalPages ? "disabled" : "")">
+            <a class="page-link" href="@Url.Action((string)ViewBag.Action, (string)ViewBag.Controller, new { genreId = ViewBag.GenreId, page = Model.PageIndex + 1, pageSize = 20 })">»</a>
+        </li>
+        <li class="page-item @(Model.PageIndex == Model.TotalPages ? "disabled" : "")">
+            <a class="page-link" href="@Url.Action((string)ViewBag.Action, (string)ViewBag.Controller, new { genreId = ViewBag.GenreId, page = Model.TotalPages, pageSize = 20 })">»»</a>
+        </li>
+    </ul>
+</nav>

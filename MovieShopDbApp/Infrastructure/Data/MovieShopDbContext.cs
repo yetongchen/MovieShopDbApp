@@ -26,7 +26,7 @@ namespace Infrastructure.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            // 配置 MovieGenre 多对多关系
+            // MovieGenre many to many
             modelBuilder.Entity<MovieGenre>()
                 .HasKey(mg => new { mg.MovieId, mg.GenreId });
 
@@ -40,7 +40,7 @@ namespace Infrastructure.Data
                 .WithMany(g => g.MovieGenres)
                 .HasForeignKey(mg => mg.GenreId);
 
-            // 配置 MovieCast 多对多关系
+            // MovieCast many to many
             modelBuilder.Entity<MovieCast>()
                 .HasKey(mc => new { mc.MovieId, mc.CastId });
 
@@ -54,13 +54,13 @@ namespace Infrastructure.Data
                 .WithMany(c => c.MovieCasts)
                 .HasForeignKey(mc => mc.CastId);
 
-            // 配置 Movie 和 Trailer 的一对多关系
+            // Movie Trailer  one to many
             modelBuilder.Entity<Trailer>()
                 .HasOne(t => t.Movie)
                 .WithMany(m => m.Trailers)
                 .HasForeignKey(t => t.MovieId);
 
-            // 配置 UserRole 多对多关系
+            // UserRole many to many
             modelBuilder.Entity<UserRole>()
                 .HasKey(ur => new { ur.UserId, ur.RoleId });
 
@@ -74,7 +74,7 @@ namespace Infrastructure.Data
                 .WithMany(r => r.UserRoles)
                 .HasForeignKey(ur => ur.RoleId);
 
-            // 配置 Purchase 多对多关系
+            // Purchase many to many
             modelBuilder.Entity<Purchase>()
                 .HasKey(p => new { p.MovieId, p.UserId });
 

@@ -7,9 +7,7 @@ using System.Threading.Tasks;
 
 namespace ApplicationCore.Contracts.Repositories
 {
-    public interface ICastRepository
+    public interface ICastRepositoryAsync : IRepositoryAsync<Cast>
     {
-        Task<Cast> GetCastWithMoviesAsync(int castId);
-        Task<IEnumerable<Cast>> GetAllCastsAsync();
     }
 }

@@ -1,0 +1,10 @@
+﻿@model IEnumerable<ApplicationCore.Entities.Genre>
+
+<ul class="dropdown-menu" aria-labelledby="genresDropdown">
+    @foreach (var genre in Model)
+    {
+        <li>
+            <a class="dropdown-item" href="@Url.Action("MoviesByGenre", "Movies", new { genreId = genre.Id })">@genre.Name</a>
+        </li>
+    }
+</ul>

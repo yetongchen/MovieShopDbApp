@@ -12,16 +12,16 @@ namespace Infrastructure.Services
 {
     public class UserService : IUserService
     {
-        private readonly IUserRepository _userRepository;
+        private readonly IUserRepositoryAsync _userRepository;
 
-        public UserService(IUserRepository userRepository)
+        public UserService(IUserRepositoryAsync userRepository)
         {
             _userRepository = userRepository;
         }
 
         public async Task<UserProfileModel> GetUserProfileAsync(int userId)
         {
-            var user = await _userRepository.GetUserByIdAsync(userId);
+            var user = await _userRepository.GetByIdAsync(userId);
             if (user == null) return null;
 
             return new UserProfileModel
@@ -49,7 +49,7 @@ namespace Infrastructure.Services
                 ProfilePictureUrl = userProfile.ProfilePictureUrl
             };
 
-            return await _userRepository.UpdateUserAsync(user);
+            return await _userRepository.UpdateAsync(user) > 0;
         }
 
         public async Task<bool> IsEmailRegisteredAsync(string email)

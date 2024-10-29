@@ -16,8 +16,8 @@ namespace Infrastructure.Services
 {
     public class AccountService : IAccountService
     {
-        private readonly IUserRepository _userRepository;
-        public AccountService(IUserRepository userRepository)
+        private readonly IUserRepositoryAsync _userRepository;
+        public AccountService(IUserRepositoryAsync userRepository)
         {
             _userRepository = userRepository;
         }
@@ -33,7 +33,7 @@ namespace Infrastructure.Services
                 HashedPassword = HashPassword(userRegister.Password)
             };
 
-            var addedUserId = await _userRepository.AddUserAsync(user);
+            var addedUserId = await _userRepository.InsertAsync(user);
             return addedUserId > 0;
         }
 
@@ -58,10 +58,14 @@ namespace Infrastructure.Services
         public async Task<bool> ResetPasswordAsync(ResetPasswordModel resetPassword)
         {
             var user = await _userRepository.GetUserByEmailAsync(resetPassword.Email);
-            if (user == null) return false;
+            if (user != null)
+            {
+                user.HashedPassword = HashPassword(resetPassword.NewPassword);
+                return await _userRepository.UpdateAsync(user) > 0;
 
-            user.HashedPassword = HashPassword(resetPassword.NewPassword);
-            return await _userRepository.UpdateUserAsync(user);
+
+            }
+            return false;
         }
 
         private string HashPassword(string password)
@@ -77,7 +81,7 @@ namespace Infrastructure.Services
         public string GenerateJwtToken(User user)
         {
             var tokenHandler = new JwtSecurityTokenHandler();
-            var key = Encoding.ASCII.GetBytes("YourSecretKeyHere"); // 使用强密码作为密钥
+            var key = Encoding.ASCII.GetBytes("YourSecretKeyHere");
             var tokenDescriptor = new SecurityTokenDescriptor
             {
                 Subject = new ClaimsIdentity(new[]

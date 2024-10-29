@@ -11,11 +11,11 @@ using System.Threading.Tasks;
 
 namespace Infrastructure.Repositories
 {
-    public class PurchaseRepository : BaseRepository<Purchase>, IPurchaseRepository
+    public class PurchaseRepositoryAsync : BaseRepositoryAsync<Purchase>, IPurchaseRepositoryAsync
     {
         private readonly MovieShopDbContext _dbContext;
 
-        public PurchaseRepository(MovieShopDbContext dbContext) : base(dbContext)
+        public PurchaseRepositoryAsync(MovieShopDbContext dbContext) : base(dbContext)
         {
             _dbContext = dbContext;
         }

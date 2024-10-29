@@ -13,7 +13,6 @@ namespace MovieApp.WebMVC.Controllers
             _userService = userService;
         }
 
-        // 查看用户资料
         public async Task<IActionResult> Profile(int userId)
         {
             var userProfile = await _userService.GetUserProfileAsync(userId);
@@ -23,7 +22,6 @@ namespace MovieApp.WebMVC.Controllers
             return View(userProfile);
         }
 
-        // 更新用户资料
         [HttpPost]
         public async Task<IActionResult> EditProfile(UserProfileModel userProfile)
         {

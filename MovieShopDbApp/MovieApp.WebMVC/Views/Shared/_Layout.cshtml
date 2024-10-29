@@ -18,54 +18,39 @@
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
-                <!--<div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                    <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-                        </li>
-                    </ul>
-                </div>-->
+
                 <div class="dropdown">
                     <a class="nav-link dropdown-toggle text-white" href="#" id="genresDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                         GENRES
                     </a>
-                    <ul class="dropdown-menu" aria-labelledby="genresDropdown">
-                        @foreach (var genre in ViewBag.Genres)
-                        {
-                            <li>
-                                <a class="dropdown-item" href="@Url.Action("ByGenre", "Movies", new { genreId = genre.Id })">@genre.Name</a>
-                            </li>
-                        }
-                    </ul>
+                    @await Component.InvokeAsync("Genres")
                 </div>
 
                 <div class="ms-auto">
                     @if (User.Identity.IsAuthenticated)
                     {
+                        <!-- Admin Menu -->
+                        @if (User.IsInRole("Admin"))
+                        {
+                            <div class="dropdown">
+                                <a class="nav-link dropdown-toggle text-white d-flex align-items-center" href="#" id="userDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    Admin
+                                </a>
+                                <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
+                                    <li><a class="dropdown-item" href="@Url.Action("TopMovies", "Admin")">Top Movies</a></li>
+                                    <li><a class="dropdown-item" href="@Url.Action("CreateMovie", "Admin")">Create Movie</a></li>
+                                </ul>
+                            </div>
+                        }
+                        <!-- User Menu -->
                         <div class="dropdown">
                             <a class="nav-link dropdown-toggle text-white d-flex align-items-center" href="#" id="userDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                @* 如果是管理员，显示 Admin 标签 *@
-                                @if (User.IsInRole("Admin"))
-                                {
-                                    <span class="badge bg-danger me-2">Admin</span>
-                                }
                                 @User.Identity.Name
                             </a>
                             <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
-                                @* 用户菜单选项 *@
                                 <li><a class="dropdown-item" href="@Url.Action("Movies", "User")">Movies</a></li>
                                 <li><a class="dropdown-item" href="@Url.Action("Favorites", "User")">Favorites</a></li>
                                 <li><a class="dropdown-item" href="@Url.Action("Profile", "User")">Account</a></li>
-                                <li><hr class="dropdown-divider" /></li>
-                                @* 仅管理员可见的选项 *@
-                                @if (User.IsInRole("Admin"))
-                                {
-                                    <li><a class="dropdown-item" href="@Url.Action("TopMovies", "Admin")">Top Movies</a></li>
-                                    <li><a class="dropdown-item" href="@Url.Action("CreateMovie", "Admin")">Create Movie</a></li>
-                                }
                                 <li><a class="dropdown-item" href="@Url.Action("Logout", "Account")">Logout</a></li>
                             </ul>
                         </div>

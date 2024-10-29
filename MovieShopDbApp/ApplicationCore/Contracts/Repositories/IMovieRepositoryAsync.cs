@@ -7,13 +7,11 @@ using System.Threading.Tasks;
 
 namespace ApplicationCore.Contracts.Repositories
 {
-    public interface IMovieRepository:IRepository<Movie>
+    public interface IMovieRepositoryAsync : IRepositoryAsync<Movie>
     {
         Task<Movie> GetMovieByIdAsync(int movieId);
-        Task<IEnumerable<Movie>> GetAllMoviesAsync();
-
         Task<IEnumerable<Movie>> GetMoviesByGenreAsync(int genreId);
         Task<IEnumerable<Movie>> GetTopPurchasedMoviesAsync();
-        Task<int> AddMovieAsync(Movie movie);
+        Task<IEnumerable<Movie>> GetHighestGrossingMovies(int count);
     }
 }

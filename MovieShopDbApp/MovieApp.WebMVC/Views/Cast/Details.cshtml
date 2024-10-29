@@ -2,8 +2,11 @@
 @{
     ViewData["Title"] = "Cast Details";
 }
+
 <h1>@Model.Name</h1>
+
 <img src="@Model.ProfilePath" alt="@Model.Name" style="width: 150px; height: auto;">
+
 @if (@Model.Gender == "2")
 {
     <p>Gender: Male</p>

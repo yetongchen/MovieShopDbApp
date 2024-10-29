@@ -11,18 +11,18 @@ namespace Infrastructure.Services
 {
     public class MovieService : IMovieService
     {
-        private readonly IMovieRepository _movieRepository;
-        private readonly IPurchaseRepository _purchaseRepository;
+        private readonly IMovieRepositoryAsync _movieRepository;
+        private readonly IPurchaseRepositoryAsync _purchaseRepository;
 
-        public MovieService(IMovieRepository movieRepository, IPurchaseRepository purchaseRepository)
+        public MovieService(IMovieRepositoryAsync movieRepository, IPurchaseRepositoryAsync purchaseRepository)
         {
             _movieRepository = movieRepository;
             _purchaseRepository = purchaseRepository;
         }
 
-        public async Task<PaginatedList<MovieCardModel>> GetMoviesForHomePageAsync(int page, int pageSize)
+        public async Task<PaginationModel<MovieCardModel>> GetMoviesForHomePageAsync(int page, int pageSize)
         {
-            var moviesQuery = await _movieRepository.GetAllMoviesAsync();
+            var moviesQuery = await _movieRepository.GetAllAsync();
             var totalMovies = moviesQuery.Count();
 
             var movies = moviesQuery
@@ -35,10 +35,10 @@ namespace Infrastructure.Services
                     PosterUrl = m.PosterUrl
                 })
                 .ToList();
-            return new PaginatedList<MovieCardModel>(movies, totalMovies, page, pageSize);
+            return new PaginationModel<MovieCardModel>(movies, totalMovies, page, pageSize);
         }
 
-        public async Task<PaginatedList<MovieCardModel>> GetMoviesByGenreAsync(int genreId, int page, int pageSize)
+        public async Task<PaginationModel<MovieCardModel>> GetMoviesByGenreAsync(int genreId, int page, int pageSize)
         {
             var moviesQuery = await _movieRepository.GetMoviesByGenreAsync(genreId);
             var totalMovies = moviesQuery.Count();
@@ -52,10 +52,10 @@ namespace Infrastructure.Services
                     Title = m.Title,
                     PosterUrl = m.PosterUrl
                 }).ToList();
-            return new PaginatedList<MovieCardModel>(movies, totalMovies, page, pageSize);
+            return new PaginationModel<MovieCardModel>(movies, totalMovies, page, pageSize);
         }
 
-        public async Task<PaginatedList<MovieCardModel>> GetMoviesPurchasedByUserIdAsync(int userId, int page, int pageSize)
+        public async Task<PaginationModel<MovieCardModel>> GetMoviesPurchasedByUserIdAsync(int userId, int page, int pageSize)
         {
             var purchasedMoviesQuery = await _purchaseRepository.GetMoviesPurchasedByUserIdAsync(userId);
             var totalMovies = purchasedMoviesQuery.Count();
@@ -69,7 +69,7 @@ namespace Infrastructure.Services
                     Title = m.Title, 
                     PosterUrl = m.PosterUrl 
                 }).ToList();
-            return new PaginatedList<MovieCardModel>(purchasedMovies, totalMovies, page, pageSize);
+            return new PaginationModel<MovieCardModel>(purchasedMovies, totalMovies, page, pageSize);
         }
 
         public async Task<MovieDetailModel> GetMovieDetailAsync(int movieId, int userId = 0)

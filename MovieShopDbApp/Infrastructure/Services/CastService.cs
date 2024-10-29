@@ -12,16 +12,16 @@ namespace Infrastructure.Services
 {
     public class CastService : ICastService
     {
-        private readonly ICastRepository _castRepository;
+        private readonly ICastRepositoryAsync _castRepository;
 
-        public CastService(ICastRepository castRepository)
+        public CastService(ICastRepositoryAsync castRepository)
         {
             _castRepository = castRepository;
         }
 
         public async Task<CastDetailModel> GetCastDetails(int castId)
         {
-            var cast = await _castRepository.GetCastWithMoviesAsync(castId);
+            var cast = await _castRepository.GetByIdAsync(castId);
             if (cast == null) return null;
 
             var castDetail = new CastDetailModel

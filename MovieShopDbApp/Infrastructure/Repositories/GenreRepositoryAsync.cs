@@ -10,11 +10,11 @@ using System.Threading.Tasks;
 
 namespace Infrastructure.Repositories
 {
-    public class GenreRepository : BaseRepository<Genre>, IGenreRepository
+    public class GenreRepositoryAsync : BaseRepositoryAsync<Genre>, IGenreRepositoryAsync
     {
         private readonly MovieShopDbContext _dbContext;
 
-        public GenreRepository(MovieShopDbContext dbContext) : base(dbContext)
+        public GenreRepositoryAsync(MovieShopDbContext dbContext) : base(dbContext)
         {
             _dbContext = dbContext;
         }

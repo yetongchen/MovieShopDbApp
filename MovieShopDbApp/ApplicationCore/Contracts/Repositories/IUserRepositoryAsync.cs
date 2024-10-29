@@ -7,7 +7,8 @@ using System.Threading.Tasks;
 
 namespace ApplicationCore.Contracts.Repositories
 {
-    public interface IGenreRepository:IRepository<Genre>
+    public interface IUserRepositoryAsync : IRepositoryAsync<User>
     {
+        Task<User> GetUserByEmailAsync(string email);
     }
 }

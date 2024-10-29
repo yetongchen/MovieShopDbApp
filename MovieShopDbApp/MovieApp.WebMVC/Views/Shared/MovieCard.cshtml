@@ -2,7 +2,7 @@
 
 <div class="movie-card">
     <a href="@Url.Action("Details", "Movies", new { id = Model.Id })">
-        <img src="@Model.PosterUrl" alt="@Model.Title" class="movie-poster" />
+        <img src="@Model.PosterUrl" alt="@Model.Title" />
+        <div class="movie-title">@Model.Title</div>
     </a>
-    <h3>@Model.Title</h3>
 </div>

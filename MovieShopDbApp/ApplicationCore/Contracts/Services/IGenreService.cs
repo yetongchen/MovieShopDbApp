@@ -10,7 +10,7 @@ namespace ApplicationCore.Contracts.Services
 {
     public interface IGenreService
     {
-        GenreModel GetGenreByIdAsync(int genreId);
-        IEnumerable<GenreModel> GetAllGenresAsync();
+        Task<GenreModel> GetGenreByIdAsync(int genreId);
+        Task<IEnumerable<GenreModel>> GetAllGenresAsync();
     }
 }

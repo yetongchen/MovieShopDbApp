@@ -15,7 +15,7 @@ namespace MovieApp.WebMVC.Controllers
 
         public override async Task OnActionExecutionAsync(ActionExecutingContext context, ActionExecutionDelegate next)
         {
-            var genres = _genreService.GetAllGenresAsync();
+            var genres = await _genreService.GetAllGenresAsync();
             ViewBag.Genres = genres;
 
             await next();

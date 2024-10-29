@@ -1,4 +1,5 @@
 ﻿using ApplicationCore.Contracts.Repositories;
+using ApplicationCore.Entities;
 using ApplicationCore.Models;
 using Infrastructure.Data;
 using System;
@@ -9,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace Infrastructure.Repositories
 {
-    public class ReportRepository
+    public class ReportRepositoryAsync
     {
     }
 }
