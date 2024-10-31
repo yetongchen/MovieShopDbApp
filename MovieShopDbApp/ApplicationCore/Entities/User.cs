@@ -38,7 +38,7 @@ namespace ApplicationCore.Entities
         public string PhoneNumber { get; set; }
 
         [Url(ErrorMessage = "Invalid profile picture URL")]
-        public string ProfilePictureUrl { get; set; }
+        public string? ProfilePictureUrl { get; set; }
 
         //[Required(ErrorMessage = "Salt is required")]
         [MaxLength(1024)]

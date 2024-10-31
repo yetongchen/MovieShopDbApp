@@ -1,6 +1,7 @@
 ﻿using ApplicationCore.Contracts.Services;
 using ApplicationCore.Models;
 using Microsoft.AspNetCore.Mvc;
+using MovieApp.WebMVC.Utility.Filters;
 
 namespace MovieApp.WebMVC.Controllers
 {
@@ -13,14 +14,12 @@ namespace MovieApp.WebMVC.Controllers
             _adminService = adminService;
         }
 
-        // 查看购买报告
         public async Task<IActionResult> TopMovies(DateTime? fromDate, DateTime? toDate, int page = 1, int pageSize = 20)
         {
             var report = await _adminService.GetTopPurchasedMoviesReportAsync(fromDate, toDate, page, pageSize);
             return View(report);
         }
 
-        // 添加新电影
         [HttpGet]
         public IActionResult AddMovie()
         {
@@ -28,6 +27,7 @@ namespace MovieApp.WebMVC.Controllers
         }
 
         [HttpPost]
+        [ServiceFilter(typeof(LogFilter))]
         public async Task<IActionResult> AddMovie(MovieCreateModel model)
         {
             if (ModelState.IsValid)

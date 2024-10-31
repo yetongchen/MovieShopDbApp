@@ -16,7 +16,7 @@ namespace MovieApp.WebMVC.Controllers
             _genreService = genreService;
         }
 
-        public async Task<IActionResult> Index(int page = 1, int pageSize = 20)
+        public async Task<IActionResult> Index(int page = 1, int pageSize = 30)
         {
             var movies = await _movieService.GetMoviesForHomePageAsync(page, pageSize);
             ViewBag.Action = "Index";
@@ -24,7 +24,7 @@ namespace MovieApp.WebMVC.Controllers
             return View(movies);
         }
 
-        public async Task<IActionResult> MoviesByGenre(int genreId, int page = 1, int pageSize = 20)
+        public async Task<IActionResult> MoviesByGenre(int genreId, int page = 1, int pageSize = 30)
         {
             var movies = await _movieService.GetMoviesByGenreAsync(genreId, page, pageSize);
             var genre = await _genreService.GetGenreByIdAsync(genreId);

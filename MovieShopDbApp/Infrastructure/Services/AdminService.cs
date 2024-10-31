@@ -13,12 +13,12 @@ namespace Infrastructure.Services
 {
     public class AdminService : IAdminService
     {
-        private readonly IPurchaseRepositoryAsync _purchaseRepository;
+        private readonly IReportRepositoryAsync _reportRepository;
         private readonly IMovieRepositoryAsync _movieRepository;
 
-        public AdminService(IPurchaseRepositoryAsync purchaseRepository, IMovieRepositoryAsync movieRepository)
+        public AdminService(IReportRepositoryAsync reportRepository, IMovieRepositoryAsync movieRepository)
         {
-            _purchaseRepository = purchaseRepository;
+            _reportRepository = reportRepository;
             _movieRepository = movieRepository;
         }
 
@@ -46,7 +46,7 @@ namespace Infrastructure.Services
 
         public async Task<IEnumerable<MoviePurchaseReportModel>> GetTopPurchasedMoviesReportAsync(DateTime? fromDate, DateTime? toDate, int page, int pageSize)
         {
-            return await _purchaseRepository.GetTopPurchasedMoviesReportAsync(fromDate, toDate, page, pageSize);
+            return await _reportRepository.GetTopPurchasedMoviesReportAsync(fromDate, toDate, page, pageSize);
         }
     }
 }

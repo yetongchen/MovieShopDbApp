@@ -17,7 +17,6 @@ namespace MovieApp.WebMVC.Controllers
             _accountService = accountService;
         }
 
-        // 用户注册
         [HttpGet]
         public IActionResult Register()
         {
@@ -37,7 +36,6 @@ namespace MovieApp.WebMVC.Controllers
             return View(model);
         }
 
-        // 用户登录
         [HttpGet]
         public IActionResult Login()
         {
@@ -75,10 +73,8 @@ namespace MovieApp.WebMVC.Controllers
             return View(model);
         }
 
-        // 用户注销
         public async Task<IActionResult> Logout()
         {
-            // 清除登录状态
             await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
             return RedirectToAction("Login");
         }

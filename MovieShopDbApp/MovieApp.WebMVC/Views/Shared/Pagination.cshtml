@@ -4,10 +4,10 @@
     <ul class="pagination justify-content-center">
         <!-- First and Previous Page Links -->
         <li class="page-item @(Model.PageIndex == 1 ? "disabled" : "")">
-            <a class="page-link" href="@Url.Action((string)ViewBag.Action, (string)ViewBag.Controller, new { genreId = ViewBag.GenreId, page = 1, pageSize = 20 })">««</a>
+            <a class="page-link" href="@Url.Action((string)ViewBag.Action, (string)ViewBag.Controller, new { genreId = ViewBag.GenreId, page = 1, pageSize = 30 })">««</a>
         </li>
         <li class="page-item @(Model.PageIndex == 1 ? "disabled" : "")">
-            <a class="page-link" href="@Url.Action((string)ViewBag.Action, (string)ViewBag.Controller, new { genreId = ViewBag.GenreId, page = Model.PageIndex - 1, pageSize = 20 })">«</a>
+            <a class="page-link" href="@Url.Action((string)ViewBag.Action, (string)ViewBag.Controller, new { genreId = ViewBag.GenreId, page = Model.PageIndex - 1, pageSize = 30 })">«</a>
         </li>
 
         <!-- Dynamic Page Number Links -->
@@ -28,7 +28,7 @@
         @if (startPage > 1)
         {
             <li class="page-item">
-                <a class="page-link" href="@Url.Action((string)ViewBag.Action, (string)ViewBag.Controller, new { genreId = ViewBag.GenreId, page = 1, pageSize = 20 })">1</a>
+                <a class="page-link" href="@Url.Action((string)ViewBag.Action, (string)ViewBag.Controller, new { genreId = ViewBag.GenreId, page = 1, pageSize = 30 })">1</a>
             </li>
             <li class="page-item disabled">
                 <span class="page-link">...</span>
@@ -46,7 +46,7 @@
             else
             {
                 <li class="page-item">
-                    <a class="page-link" href="@Url.Action((string)ViewBag.Action, (string)ViewBag.Controller, new { genreId = ViewBag.GenreId, page = i, pageSize = 20 })">@i</a>
+                    <a class="page-link" href="@Url.Action((string)ViewBag.Action, (string)ViewBag.Controller, new { genreId = ViewBag.GenreId, page = i, pageSize = 30 })">@i</a>
                 </li>
             }
         }
@@ -57,16 +57,16 @@
                 <span class="page-link">...</span>
             </li>
             <li class="page-item">
-                <a class="page-link" href="@Url.Action((string)ViewBag.Action, (string)ViewBag.Controller, new { genreId = ViewBag.GenreId, page = totalPages, pageSize = 20 })">@totalPages</a>
+                <a class="page-link" href="@Url.Action((string)ViewBag.Action, (string)ViewBag.Controller, new { genreId = ViewBag.GenreId, page = totalPages, pageSize = 30 })">@totalPages</a>
             </li>
         }
 
         <!-- Next and Last Page Links -->
         <li class="page-item @(Model.PageIndex == Model.TotalPages ? "disabled" : "")">
-            <a class="page-link" href="@Url.Action((string)ViewBag.Action, (string)ViewBag.Controller, new { genreId = ViewBag.GenreId, page = Model.PageIndex + 1, pageSize = 20 })">»</a>
+            <a class="page-link" href="@Url.Action((string)ViewBag.Action, (string)ViewBag.Controller, new { genreId = ViewBag.GenreId, page = Model.PageIndex + 1, pageSize = 30 })">»</a>
         </li>
         <li class="page-item @(Model.PageIndex == Model.TotalPages ? "disabled" : "")">
-            <a class="page-link" href="@Url.Action((string)ViewBag.Action, (string)ViewBag.Controller, new { genreId = ViewBag.GenreId, page = Model.TotalPages, pageSize = 20 })">»»</a>
+            <a class="page-link" href="@Url.Action((string)ViewBag.Action, (string)ViewBag.Controller, new { genreId = ViewBag.GenreId, page = Model.TotalPages, pageSize = 30 })">»»</a>
         </li>
     </ul>
 </nav>

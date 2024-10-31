@@ -1,13 +1,7 @@
 ﻿using ApplicationCore.Contracts.Repositories;
 using ApplicationCore.Entities;
-using ApplicationCore.Models;
 using Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Infrastructure.Repositories
 {
@@ -45,35 +39,6 @@ namespace Infrastructure.Repositories
         {
             return await _dbContext.Purchases
                 .CountAsync(p => p.MovieId == movieId);
-        }
-
-        public async Task<IEnumerable<MoviePurchaseReportModel>> GetTopPurchasedMoviesReportAsync(DateTime? fromDate, DateTime? toDate, int page, int pageSize)
-        {
-            var query = _dbContext.Purchases.AsQueryable();
-
-            if (fromDate.HasValue)
-            {
-                query = query.Where(p => p.PurchaseDateTime >= fromDate.Value);
-            }
-            if (toDate.HasValue)
-            {
-                query = query.Where(p => p.PurchaseDateTime <= toDate.Value);
-            }
-
-            var moviePurchases = await query
-                .GroupBy(p => p.MovieId)
-                .OrderByDescending(g => g.Count())
-                .Skip((page - 1) * pageSize)
-                .Take(pageSize)
-                .Select(g => new MoviePurchaseReportModel
-                {
-                    MovieId = g.Key,
-                    Title = g.Select(p => p.Movie.Title).FirstOrDefault(),
-                    TotalPurchases = g.Count()
-                })
-                .ToListAsync();
-
-            return moviePurchases;
         }
     }
 }

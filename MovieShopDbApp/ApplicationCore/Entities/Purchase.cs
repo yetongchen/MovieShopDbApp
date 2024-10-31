@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using ApplicationCore.Validators;
 
 namespace ApplicationCore.Entities
 {
@@ -10,6 +6,7 @@ namespace ApplicationCore.Entities
     {
         public required int MovieId { get; set; }
         public required int UserId { get; set; }
+        [FutureDate]
         public required DateTime PurchaseDateTime { get; set; }
         public required Guid PurchaseNumber { get; set; }
         public required decimal TotalPrice { get; set; }

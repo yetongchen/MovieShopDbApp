@@ -29,6 +29,7 @@ namespace Infrastructure.Services
                 FirstName = userRegister.FirstName,
                 LastName = userRegister.LastName,
                 Email = userRegister.Email,
+                PhoneNumber = userRegister.PhoneNumber,
                 DateOfBirth = userRegister.DateOfBirth,
                 HashedPassword = HashPassword(userRegister.Password)
             };
