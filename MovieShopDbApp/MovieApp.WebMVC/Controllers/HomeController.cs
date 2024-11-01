@@ -1,5 +1,6 @@
+using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
-using MovieApp.WebMVC.Models;
+using ApplicationCore.Models;
 using System.Diagnostics;
 
 namespace MovieApp.WebMVC.Controllers
@@ -23,10 +24,17 @@ namespace MovieApp.WebMVC.Controllers
             return View();
         }
 
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+            var exceptionDetails = HttpContext.Features.Get<IExceptionHandlerPathFeature>();
+            var model = new ErrorViewModel
+            {
+                RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier,
+                ErrorMessage = exceptionDetails?.Error.Message,
+                StackTrace = exceptionDetails?.Error.StackTrace
+            };
+
+            return View(model);
         }
     }
 }
