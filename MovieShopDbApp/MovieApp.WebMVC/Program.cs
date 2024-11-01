@@ -26,6 +26,11 @@ builder.Services.AddDbContext<MovieShopDbContext>(option => {
 });
 
 var secretKey = builder.Configuration["JwtSettings:SecretKey"];
+if (secretKey == null)
+{
+    throw new InvalidOperationException("JWT SecretKey is not configured.");
+}
+
 builder.Services.AddAuthentication(options =>
 {
     options.DefaultAuthenticateScheme = CookieAuthenticationDefaults.AuthenticationScheme;
@@ -35,6 +40,7 @@ builder.Services.AddAuthentication(options =>
 .AddCookie(options =>
 {
     options.LoginPath = "/Account/Login";
+    options.AccessDeniedPath = "/Account/AccessDenied";
     options.LogoutPath = "/Account/Logout";
 })
 .AddJwtBearer(options =>
@@ -42,7 +48,7 @@ builder.Services.AddAuthentication(options =>
     options.TokenValidationParameters = new TokenValidationParameters
     {
         ValidateIssuerSigningKey = true,
-        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(secretKey)),
+        IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(secretKey)),
         ValidateIssuer = false,
         ValidateAudience = false
     };
@@ -51,7 +57,7 @@ builder.Services.AddAuthorization(options =>
 {
     options.AddPolicy("AdminOnly", policy => policy.RequireRole("Admin"));
 });
-builder.Services.AddControllersWithViews(); //var key = Encoding.ASCII.GetBytes("YourSecretKeyHere"); // 使用强密码作为密钥
+builder.Services.AddControllersWithViews();
 
 builder.Services.AddScoped<IMovieRepositoryAsync, MovieRepositoryAsync>();
 builder.Services.AddScoped<IUserRepositoryAsync, UserRepositoryAsync>();
@@ -62,7 +68,6 @@ builder.Services.AddScoped<IReportRepositoryAsync, ReportRepositoryAsync>();
 
 builder.Services.AddScoped<IMovieService, MovieService>();
 builder.Services.AddScoped<IUserService, UserService>();
-builder.Services.AddScoped<IGenreService, GenreService>();
 builder.Services.AddScoped<ICastService, CastService>();
 builder.Services.AddScoped<IAccountService, AccountService>();
 builder.Services.AddScoped<IAdminService, AdminService>();

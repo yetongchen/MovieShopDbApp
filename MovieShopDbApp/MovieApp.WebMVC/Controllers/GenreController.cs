@@ -4,15 +4,8 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace MovieApp.WebMVC.Controllers
 {
-    public class GenreController : BaseController
+    public class GenreController : Controller
     {
-        private readonly IGenreService _genreService;
-        public GenreController(IGenreService genreService) : base(genreService)
-        {
-            _genreService = genreService;
-        }
-
-
         /*public IActionResult Index()
         {
             var result = _genreService.GetAllGenre();

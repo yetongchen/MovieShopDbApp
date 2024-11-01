@@ -1,19 +1,20 @@
-﻿using ApplicationCore.Contracts.Services;
+﻿using ApplicationCore.Contracts.Repositories;
+using ApplicationCore.Contracts.Services;
 using ApplicationCore.Entities;
 using Infrastructure.Services;
 using Microsoft.AspNetCore.Mvc;
 
 namespace MovieApp.WebMVC.Controllers
 {
-    public class MoviesController : BaseController
+    public class MoviesController : Controller
     {
         private readonly IMovieService _movieService;
-        private readonly IGenreService _genreService;
+        private readonly IGenreRepositoryAsync _genreRepository;
 
-        public MoviesController(IMovieService movieService, IGenreService genreService) : base(genreService)
+        public MoviesController(IMovieService movieService, IGenreRepositoryAsync genreRepository)
         {
             _movieService = movieService;
-            _genreService = genreService;
+            _genreRepository = genreRepository;
         }
 
         public async Task<IActionResult> Index(int page = 1, int pageSize = 30)
@@ -27,7 +28,7 @@ namespace MovieApp.WebMVC.Controllers
         public async Task<IActionResult> MoviesByGenre(int genreId, int page = 1, int pageSize = 30)
         {
             var movies = await _movieService.GetMoviesByGenreAsync(genreId, page, pageSize);
-            var genre = await _genreService.GetGenreByIdAsync(genreId);
+            var genre = await _genreRepository.GetByIdAsync(genreId);
             if (genre == null)
             {
                 return NotFound();

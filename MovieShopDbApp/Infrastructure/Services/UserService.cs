@@ -19,7 +19,7 @@ namespace Infrastructure.Services
             _userRepository = userRepository;
         }
 
-        public async Task<UserProfileModel> GetUserProfileAsync(int userId)
+        public async Task<UserProfileModel?> GetUserProfileAsync(int userId)
         {
             var user = await _userRepository.GetByIdAsync(userId);
             if (user == null) return null;
@@ -38,6 +38,12 @@ namespace Infrastructure.Services
 
         public async Task<bool> UpdateUserProfileAsync(UserProfileModel userProfile)
         {
+            var original_user = await _userRepository.GetByIdAsync(userProfile.Id);
+            if (original_user == null) 
+            { 
+                return false; 
+            }
+
             var user = new User
             {
                 Id = userProfile.Id,
@@ -46,7 +52,9 @@ namespace Infrastructure.Services
                 Email = userProfile.Email,
                 DateOfBirth = userProfile.DateOfBirth,
                 PhoneNumber = userProfile.PhoneNumber,
-                ProfilePictureUrl = userProfile.ProfilePictureUrl
+                ProfilePictureUrl = userProfile.ProfilePictureUrl,
+                HashedPassword = original_user.HashedPassword,
+                Salt = original_user.Salt
             };
 
             return await _userRepository.UpdateAsync(user) > 0;

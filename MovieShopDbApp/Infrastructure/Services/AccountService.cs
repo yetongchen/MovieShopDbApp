@@ -3,12 +3,14 @@ using ApplicationCore.Contracts.Services;
 using ApplicationCore.Entities;
 using ApplicationCore.Models;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using System;
 using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Security.Claims;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -17,13 +19,18 @@ namespace Infrastructure.Services
     public class AccountService : IAccountService
     {
         private readonly IUserRepositoryAsync _userRepository;
-        public AccountService(IUserRepositoryAsync userRepository)
+        private readonly IConfiguration _configuration;
+        public AccountService(IUserRepositoryAsync userRepository, IConfiguration configuration)
         {
             _userRepository = userRepository;
+            _configuration = configuration;
         }
 
         public async Task<bool> RegisterUserAsync(UserRegisterModel userRegister)
         {
+            var profilePictureUrl = _configuration["DefaultProfilePictureUrl"] ?? "/images/defaults/Default_pfp.png";
+            var salt = GenerateSalt();
+
             var user = new User
             {
                 FirstName = userRegister.FirstName,
@@ -31,7 +38,9 @@ namespace Infrastructure.Services
                 Email = userRegister.Email,
                 PhoneNumber = userRegister.PhoneNumber,
                 DateOfBirth = userRegister.DateOfBirth,
-                HashedPassword = HashPassword(userRegister.Password)
+                ProfilePictureUrl = profilePictureUrl,
+                Salt = salt,
+                HashedPassword = HashPassword(userRegister.Password, salt)
             };
 
             var addedUserId = await _userRepository.InsertAsync(user);
@@ -61,7 +70,7 @@ namespace Infrastructure.Services
             var user = await _userRepository.GetUserByEmailAsync(resetPassword.Email);
             if (user != null)
             {
-                user.HashedPassword = HashPassword(resetPassword.NewPassword);
+                user.HashedPassword = HashPassword(resetPassword.NewPassword, user.Salt);
                 return await _userRepository.UpdateAsync(user) > 0;
 
 
@@ -69,9 +78,9 @@ namespace Infrastructure.Services
             return false;
         }
 
-        private string HashPassword(string password)
+        private string HashPassword(string password, string salt)
         {
-            return BCrypt.Net.BCrypt.HashPassword(password);
+            return BCrypt.Net.BCrypt.HashPassword(password, salt);
         }
 
         private bool VerifyPassword(string password, string hashedPassword)
@@ -81,8 +90,13 @@ namespace Infrastructure.Services
 
         public string GenerateJwtToken(User user)
         {
+            var secretKey = _configuration["JwtSettings:SecretKey"];
+            if (secretKey == null)
+            {
+                throw new InvalidOperationException("JWT SecretKey is not configured.");
+            }
             var tokenHandler = new JwtSecurityTokenHandler();
-            var key = Encoding.ASCII.GetBytes("YourSecretKeyHere");
+            var key = Encoding.ASCII.GetBytes(secretKey);
             var tokenDescriptor = new SecurityTokenDescriptor
             {
                 Subject = new ClaimsIdentity(new[]
@@ -95,6 +109,11 @@ namespace Infrastructure.Services
             };
             var token = tokenHandler.CreateToken(tokenDescriptor);
             return tokenHandler.WriteToken(token);
+        }
+
+        private static string GenerateSalt()
+        {
+            return BCrypt.Net.BCrypt.GenerateSalt();
         }
     }
 }

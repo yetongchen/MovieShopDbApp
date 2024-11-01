@@ -8,11 +8,11 @@ using Infrastructure.Services;
 
 namespace MovieApp.WebMVC.Controllers
 {
-    public class AccountController : BaseController
+    public class AccountController : Controller
     {
         private readonly IAccountService _accountService;
 
-        public AccountController(IAccountService accountService, IGenreService genreService) : base(genreService)
+        public AccountController(IAccountService accountService)
         {
             _accountService = accountService;
         }
@@ -68,15 +68,25 @@ namespace MovieApp.WebMVC.Controllers
 
                     return RedirectToAction("Index", "Movies");
                 }
+                else
+                {
+                    return RedirectToAction("AccessDenied", "Account");
+                }
             }
 
             return View(model);
         }
 
+        [HttpGet]
+        public IActionResult AccessDenied()
+        {
+            return View();
+        }
+
         public async Task<IActionResult> Logout()
         {
             await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
-            return RedirectToAction("Login");
+            return RedirectToAction("Index", "Movies");
         }
     }
 }

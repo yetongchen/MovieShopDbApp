@@ -5,11 +5,11 @@ using MovieApp.WebMVC.Utility.Filters;
 
 namespace MovieApp.WebMVC.Controllers
 {
-    public class AdminController : BaseController
+    public class AdminController : Controller
     {
         private readonly IAdminService _adminService;
 
-        public AdminController(IAdminService adminService, IGenreService genreService) : base(genreService)
+        public AdminController(IAdminService adminService)
         {
             _adminService = adminService;
         }
@@ -21,14 +21,14 @@ namespace MovieApp.WebMVC.Controllers
         }
 
         [HttpGet]
-        public IActionResult AddMovie()
+        public IActionResult CreateMovie()
         {
             return View();
         }
 
         [HttpPost]
         [ServiceFilter(typeof(LogFilter))]
-        public async Task<IActionResult> AddMovie(MovieCreateModel model)
+        public async Task<IActionResult> CreateMovie(MovieCreateModel model)
         {
             if (ModelState.IsValid)
             {

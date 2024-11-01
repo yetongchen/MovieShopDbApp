@@ -9,7 +9,7 @@ namespace ApplicationCore.Contracts.Services
 {
     public interface IUserService
     {
-        Task<UserProfileModel> GetUserProfileAsync(int userId);
+        Task<UserProfileModel?> GetUserProfileAsync(int userId);
         Task<bool> UpdateUserProfileAsync(UserProfileModel userProfile);
         Task<bool> IsEmailRegisteredAsync(string email);
     }

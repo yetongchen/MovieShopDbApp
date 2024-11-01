@@ -1,25 +1,36 @@
 ﻿using ApplicationCore.Contracts.Services;
 using ApplicationCore.Models;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 
 namespace MovieApp.WebMVC.Controllers
 {
-    public class UserController : BaseController
+    public class UserController : Controller
     {
         private readonly IUserService _userService;
 
-        public UserController(IUserService userService, IGenreService genreService) : base(genreService)
+        public UserController(IUserService userService)
         {
             _userService = userService;
         }
 
-        public async Task<IActionResult> Profile(int userId)
+        [HttpGet]
+        public async Task<IActionResult> Profile()
         {
-            var userProfile = await _userService.GetUserProfileAsync(userId);
-            if (userProfile == null)
-                return NotFound();
+            if (!User.Identity.IsAuthenticated)
+            {
+                if (User.FindFirst(ClaimTypes.NameIdentifier) != null)
+                {
+                    int userId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
+                    var userProfile = await _userService.GetUserProfileAsync(userId);
+                    if (userProfile != null)
+                    {
+                        return View(userProfile);
+                    }
+                }
+            }
 
-            return View(userProfile);
+            return RedirectToAction("Login", "Account");
         }
 
         [HttpPost]
