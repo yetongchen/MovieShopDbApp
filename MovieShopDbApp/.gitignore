@@ -53,7 +53,6 @@ ehthumbs.db
 
 # Ignore Publish/Web output folders
 **/publish/
-**/dist/
 
 # Ignore ApplicationCore specific settings
 /ApplicationCore/bin/
