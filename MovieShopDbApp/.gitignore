@@ -52,7 +52,6 @@ ehthumbs.db
 .DS_Store
 
 # Ignore Publish/Web output folders
-**/wwwroot/
 **/publish/
 **/dist/
 

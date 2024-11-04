@@ -1,0 +1,124 @@
+html {
+  font-size: 14px;
+}
+
+@media (min-width: 768px) {
+  html {
+    font-size: 16px;
+  }
+}
+
+.btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
+  box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
+}
+
+html {
+  position: relative;
+  min-height: 100%;
+}
+
+body {
+  margin-bottom: 60px;
+}
+
+a.nav-link {
+    color: white !important;
+}
+
+.container {
+    max-width: 100%;
+}
+
+/* Movie Detials */
+.movie-info h2 {
+    font-size: 2rem;
+    font-weight: bold;
+    color: #333;
+}
+
+.movie-info .badge {
+    margin-right: 5px;
+    font-size: 0.85rem;
+    color: #fff;
+}
+
+.movie-info p {
+    font-size: 1rem;
+    color: #555;
+}
+
+
+.movie-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.movie-buttons .btn {
+    width: 100%;
+}
+
+.movie-facts,
+.trailer-list,
+.cast-list {
+    margin-top: 1.5rem;
+}
+
+.list-group-item {
+    font-size: 1rem;
+}
+
+.modal-content h5 {
+    font-weight: bold;
+    color: #333;
+}
+
+.modal-content .form-select,
+.modal-content textarea {
+    margin-top: 10px;
+}
+
+.modal-footer .btn {
+    min-width: 100px;
+}
+
+
+/* Movie Card */
+.movie-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+}
+
+.movie-card {
+    width: 200px;
+    text-align: center;
+    position: relative;
+}
+
+.movie-card img {
+    width: 100%;
+    height: auto;
+    border-radius: 8px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, filter 0.3s ease;
+}
+
+.movie-card:hover img {
+    transform: scale(1.05);
+    filter: brightness(0.7);
+}
+
+.movie-title {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    color: #fff;
+    text-align: center;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.movie-card:hover .movie-title {
+    opacity: 1;
+}
