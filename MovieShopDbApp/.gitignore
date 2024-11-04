@@ -67,5 +67,4 @@ ehthumbs.db
 # Ignore MovieApp.WebMVC specific settings
 /MovieApp.WebMVC/bin/
 /MovieApp.WebMVC/obj/
-/MovieApp.WebMVC/wwwroot/
 /MovieApp.WebMVC/Logs/
