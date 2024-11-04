@@ -90,7 +90,8 @@ namespace Infrastructure.Services
 
         public string GenerateJwtToken(User user)
         {
-            var secretKey = _configuration["JwtSettings:SecretKey"];
+            var secretKey = _configuration["JwtSettings:SecretKey"]
+                ?? "Movie!Shop@WebApp#Oct2024$VeryLongSecretKeyHereWithAtLeast32Characters%@!#";
             if (secretKey == null)
             {
                 throw new InvalidOperationException("JWT SecretKey is not configured.");

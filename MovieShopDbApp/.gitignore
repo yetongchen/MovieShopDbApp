@@ -68,3 +68,4 @@ ehthumbs.db
 /MovieApp.WebMVC/bin/
 /MovieApp.WebMVC/obj/
 /MovieApp.WebMVC/wwwroot/
+/MovieApp.WebMVC/Logs/

@@ -25,11 +25,8 @@ builder.Services.AddDbContext<MovieShopDbContext>(option => {
     option.UseSqlServer(builder.Configuration.GetConnectionString("MovieOct2024"));
 });
 
-var secretKey = builder.Configuration["JwtSettings:SecretKey"];
-if (secretKey == null)
-{
-    throw new InvalidOperationException("JWT SecretKey is not configured.");
-}
+var secretKey = builder.Configuration["JwtSettings:SecretKey"] 
+    ?? "Movie!Shop@WebApp#Oct2024$VeryLongSecretKeyHereWithAtLeast32Characters%@!#";
 
 builder.Services.AddAuthentication(options =>
 {
@@ -87,7 +84,7 @@ app.UseRouting();
 
 app.UseAuthorization();
 
-app.UseMiddleware<ExceptionMiddleware>();
+// app.UseMiddleware<ExceptionMiddleware>();
 
 app.MapControllerRoute(
     name: "default",
