@@ -84,7 +84,7 @@ app.UseRouting();
 
 app.UseAuthorization();
 
-// app.UseMiddleware<ExceptionMiddleware>();
+app.UseMiddleware<ExceptionMiddleware>();
 
 app.MapControllerRoute(
     name: "default",
